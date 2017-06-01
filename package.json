@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node node_modules/webpack/bin/webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "react-dom": "^15.5.4",
     "react-tap-event-plugin": "^2.0.1",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "webpack-s3-plugin": "^1.0.0-rc.0"
   }
 }
