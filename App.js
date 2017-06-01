@@ -1,16 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Title from './Components/Title.js'
-import Logon from './Components/Logon.js';
+import AppBar from 'material-ui/AppBar';
+import GoogleAuthButton from './Components/GoogleAuthButton.js'
 
-class App extends React.Component {
-   render() {
+function onAuthSuccess(payload) {
+  console.log("success: " + JSON.stringify(payload))
+};
+
+function onAuthFailure(payload) {
+  console.log("failure: " + payload)
+}
+
+export default class App extends React.Component {
+  render() {
       return (
-        <div>
-            <Title/>
-            <Logon/>
-        </div>
+        <AppBar
+          title={<span>DateDonkey</span>}
+          iconElementRight={<GoogleAuthButton 
+            clientId="811522414771-s8nnkmrgh2sfa9i36oopc7meklt3548r.apps.googleusercontent.com"
+            onSuccess={ onAuthSuccess }
+            onFailure={ onAuthFailure }
+          />}
+        />
       );
    }
 }
-export default App;
