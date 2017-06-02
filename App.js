@@ -4,7 +4,8 @@ import AppBar from 'material-ui/AppBar';
 import GoogleAuthButton from './Components/GoogleAuthButton.js'
 
 function onAuthSuccess(payload) {
-  console.log("success: " + JSON.stringify(payload))
+  console.log("success: " + payload)
+  fetch("https://api.datedonkey.com/user/" + payload.profileObj.googleId)
 };
 
 function onAuthFailure(payload) {

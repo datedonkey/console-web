@@ -17,6 +17,7 @@
     "react-tap-event-plugin": "^2.0.1",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5",
-    "webpack-s3-plugin": "^1.0.0-rc.0"
+    "webpack-s3-plugin": "^1.0.0-rc.0",
+    "whatwg-fetch": "^2.0.3"
   }
 }
