@@ -2,15 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AppBar from 'material-ui/AppBar';
 import Chip from 'material-ui/Chip';
-import GoogleAuthButton from './Components/GoogleAuthButton.js'
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import GoogleAuthButton from './Components/GoogleAuthButton.js';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { showLoggedIn: null }
+    this.state = { showLoggedIn: null, drawerOpen: false }
     this.onAuthSuccess = this.onAuthSuccess.bind(this)
     this.onAuthFailure = this.onAuthFailure.bind(this)
     this.onLogoutClicked = this.onLogoutClicked.bind(this)
+    this.onDrawerClicked = this.onDrawerClicked.bind(this)
   }
 
   onAuthSuccess(payload) {
@@ -29,10 +32,16 @@ export default class App extends React.Component {
     this.setState({ showLoggedIn: null })
   }
 
+  onDrawerClicked() {
+    this.setState({ drawerOpen: !this.state.drawerOpen })
+  }
+
   render() {
     return (
+      <div id="app">
       <AppBar
         title={<span>DateDonkey</span>}
+        onLeftIconButtonTouchTap={ this.onDrawerClicked }
         iconElementRight={
           <div id="RightSideAppBar">
           { this.state.showLoggedIn == null ? 
@@ -46,6 +55,15 @@ export default class App extends React.Component {
           }
         </div>}
       />
+      <Drawer
+        docked={ false }
+        width={ 200 }
+        open={ this.state.drawerOpen }
+        onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
+      >
+        <MenuItem>Settings</MenuItem>
+      </Drawer>
+      </div>
     );
   }
 }
