@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import Chip from 'material-ui/Chip';
 import SettingsDrawer from './Components/SettingsDrawer.js';
 import GoogleAuthButton from './Components/GoogleAuthButton.js';
+import Sources from './Components/Sources.js'
 
 export default class App extends React.Component {
   constructor(props) {

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import Sources from './Sources.js'
 
 export default class SettingsDrawer extends Component {
     constructor(props) {
@@ -22,14 +23,24 @@ export default class SettingsDrawer extends Component {
 
     render() {
         return(
-            <Drawer
-                docked={ false }
-                width={ this.props.width }
-                open={ this.state.open }
-                onRequestChange={ this.onRequestChange }
-            >
-                <MenuItem>Sources</MenuItem>
-            </Drawer>
+            <div id="settingsDrawer">
+                <Drawer
+                    docked={ false }
+                    width={ this.props.width }
+                    open={ this.state.open }
+                    onRequestChange={ this.onRequestChange }
+                >
+                    <MenuItem
+                        onTouchTap={ () => {
+                            this.refs.sourcesCard.show() 
+                            this.setState({ open: false })
+                        }}
+                    >
+                        Sources
+                    </MenuItem>
+                </Drawer>
+                <Sources ref="sourcesCard" />
+            </div>
         )
     }
 }
