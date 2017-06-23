@@ -2,18 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AppBar from 'material-ui/AppBar';
 import Chip from 'material-ui/Chip';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import SettingsDrawer from './Components/SettingsDrawer.js';
 import GoogleAuthButton from './Components/GoogleAuthButton.js';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { showLoggedIn: null, drawerOpen: false }
+    this.state = { showLoggedIn: null }
     this.onAuthSuccess = this.onAuthSuccess.bind(this)
     this.onAuthFailure = this.onAuthFailure.bind(this)
     this.onLogoutClicked = this.onLogoutClicked.bind(this)
-    this.onDrawerClicked = this.onDrawerClicked.bind(this)
+    this.onHamburgerClicked = this.onHamburgerClicked.bind(this)
   }
 
   onAuthSuccess(payload) {
@@ -32,37 +31,31 @@ export default class App extends React.Component {
     this.setState({ showLoggedIn: null })
   }
 
-  onDrawerClicked() {
-    this.setState({ drawerOpen: !this.state.drawerOpen })
+  onHamburgerClicked() {
+    this.refs.settingsDrawer.open()
   }
 
   render() {
     return (
       <div id="app">
-      <AppBar
-        title={<span>DateDonkey</span>}
-        onLeftIconButtonTouchTap={ this.onDrawerClicked }
-        iconElementRight={
-          <div id="RightSideAppBar">
-          { this.state.showLoggedIn == null ? 
-            <GoogleAuthButton 
-            clientId="811522414771-s8nnkmrgh2sfa9i36oopc7meklt3548r.apps.googleusercontent.com"
-            onSuccess={ this.onAuthSuccess }
-            onFailure={ this.onAuthFailure }/> :
-            <Chip
-            onRequestDelete={ this.onLogoutClicked }>
-            { this.state.showLoggedIn }</Chip> 
-          }
-        </div>}
-      />
-      <Drawer
-        docked={ false }
-        width={ 200 }
-        open={ this.state.drawerOpen }
-        onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
-      >
-        <MenuItem>Settings</MenuItem>
-      </Drawer>
+        <AppBar
+          title={<span>DateDonkey</span>}
+          onLeftIconButtonTouchTap={ this.onHamburgerClicked }
+          iconElementRight={
+            <div id="RightSideAppBar">
+            { this.state.showLoggedIn == null ? 
+              <GoogleAuthButton 
+              clientId="811522414771-s8nnkmrgh2sfa9i36oopc7meklt3548r.apps.googleusercontent.com"
+              onSuccess={ this.onAuthSuccess }
+              onFailure={ this.onAuthFailure }/> :
+              <Chip
+              onRequestDelete={ this.onLogoutClicked }>
+              { this.state.showLoggedIn }</Chip> 
+            }
+          </div>}
+        />
+        <SettingsDrawer 
+          ref="settingsDrawer" />
       </div>
     );
   }
