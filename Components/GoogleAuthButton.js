@@ -106,6 +106,8 @@ export default class GoogleAuthButton extends Component {
             label={ children ? children : buttonText }
             onTouchTap={ this.signIn }
             disabled={ disabled }
+            primary={ this.props.primary }
+            secondary={ this.props.secondary }
         />
     );
   }
@@ -135,12 +137,14 @@ GoogleAuthButton.propTypes = {
   discoveryDocs: PropTypes.array,
   responseType: PropTypes.string,
   uxMode: PropTypes.string,
+  primary: PropTypes.bool,
+  secondary: PropTypes.bool
 };
 
 GoogleAuthButton.defaultProps = {
   tag: 'button',
   buttonText: 'Login',
-  scope: 'profile email',
+  scope: 'profile',
   responseType: 'permission',
   prompt: '',
   cookiePolicy: 'single_host_origin',
@@ -151,4 +155,6 @@ GoogleAuthButton.defaultProps = {
   },
   onRequest: () => {},
   offline: false,
+  primary: false,
+  secondary: false
 }
