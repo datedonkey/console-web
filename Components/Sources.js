@@ -9,10 +9,30 @@ export default class Sources extends Component {
     constructor(props) {
         super(props);
         this.state = { visible: false }
+        this.onGoogleSourceAddSuccess = this.onGoogleSourceAddSuccess.bind(this)
+        this.onGoogleSourceAddFailure = this.onGoogleSourceAddFailure.bind(this)
     }
 
     show() {
-        this.setState({ visible: true})
+        this.setState({ visible: true })
+    }
+
+    onGoogleSourceAddSuccess(payload) {
+        fetch("https://api.datedonkey.com/user/" + this.props.userId + "/setOfflineKey", {
+            method: "PUT",
+            body: JSON.stringify({ "googleIdOfflineKey": payload.code }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => { return response.json() })
+            .then(responseValue => {
+                console.log(responseValue)
+            })
+    }
+
+    onGoogleSourceAddFailure(payload) {
+        alert(payload.errorMessage)
     }
 
     render() {
@@ -32,6 +52,8 @@ export default class Sources extends Component {
                             secondary={ true }
                             offline={ true }
                             scope={ "https://www.googleapis.com/auth/calendar.readonly" }
+                            onSuccess={ this.onGoogleSourceAddSuccess }
+                            onFailure={ this.onGoogleSourceAddFailure }
                         />
                     </CardText>
                     <Divider/>
@@ -45,4 +67,12 @@ export default class Sources extends Component {
             : null
         )
     }
+}
+
+Sources.propTypes = {
+    userId: PropTypes.string
+}
+
+Sources.defaultProps = {
+    userId: null
 }

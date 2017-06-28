@@ -39,16 +39,18 @@ export default class SettingsDrawer extends Component {
                         Sources
                     </MenuItem>
                 </Drawer>
-                <Sources ref="sourcesCard" />
+                <Sources ref="sourcesCard" userId={ this.props.userId }/>
             </div>
         )
     }
 }
 
 SettingsDrawer.propTypes = {
-    width: PropTypes.number
+    width: PropTypes.number,
+    userId: PropTypes.string
 }
 
 SettingsDrawer.defaultProps = {
-    width: 200
+    width: 200,
+    userId: null
 }

@@ -4,12 +4,11 @@ import AppBar from 'material-ui/AppBar';
 import Chip from 'material-ui/Chip';
 import SettingsDrawer from './Components/SettingsDrawer.js';
 import GoogleAuthButton from './Components/GoogleAuthButton.js';
-import Sources from './Components/Sources.js'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { showLoggedIn: null }
+    this.state = { showLoggedIn: null, userId: null }
     this.onAuthSuccess = this.onAuthSuccess.bind(this)
     this.onAuthFailure = this.onAuthFailure.bind(this)
     this.onLogoutClicked = this.onLogoutClicked.bind(this)
@@ -20,16 +19,16 @@ export default class App extends React.Component {
     fetch("https://api.datedonkey.com/user/byExternalId/" + payload.profileObj.googleId)
       .then(response => { return response.json() })
       .then(responseValue => {
-        this.setState({ showLoggedIn: responseValue.name })
+        this.setState({ showLoggedIn: responseValue.name, userId: responseValue.id })
       })
-  };
+  }
 
   onAuthFailure(payload) {
     console.log("failure: " + payload)
   }
 
   onLogoutClicked() {
-    this.setState({ showLoggedIn: null })
+    this.setState({ showLoggedIn: null, userId: null })
   }
 
   onHamburgerClicked() {
@@ -42,6 +41,7 @@ export default class App extends React.Component {
         <AppBar
           title={<span>DateDonkey</span>}
           onLeftIconButtonTouchTap={ this.onHamburgerClicked }
+          showMenuIconButton={ this.state.userId != null }
           iconElementRight={
             <div id="RightSideAppBar">
             { this.state.showLoggedIn == null ? 
@@ -56,7 +56,7 @@ export default class App extends React.Component {
           </div>}
         />
         <SettingsDrawer 
-          ref="settingsDrawer" />
+          ref="settingsDrawer" userId={ this.state.userId } />
       </div>
     );
   }
